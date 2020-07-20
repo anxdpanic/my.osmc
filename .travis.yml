@@ -1,0 +1,28 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+env:
+  global:
+    - OSMC_PACKAGE_NAME=my_osmc
+
+install:
+  - pip install isort
+  - pip install pylint
+  - pip install pytest
+
+script:
+  - pytest
+  -| 
+   if [[ $TRAVIS_PYTHON_VERSION == "3.5" ]]; then 
+   pylint $OSMC_PACKAGE_NAME;
+   fi
+  -|
+   if [[ $TRAVIS_PYTHON_VERSION == "3.5" ]]; then 
+   isort -sl -rc $OSMC_PACKAGE_NAME --diff;
+   fi
+  - pip install $OSMC_PACKAGE_NAME 
+  
